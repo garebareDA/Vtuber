@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja" style="height: 100%;">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body style="height: 100%;">
+    <input type="button" onclick="location.reload()" value="rest" style="height: 100%; width: 100%;  border-radius: 0;
+    -webkit-box-sizing: content-box;
+    -webkit-appearance: button;
+    appearance: button;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;">
+
+  <script>
+    const host = document.location.host.replace(/:.*/, '');
+    const ws = new WebSocket('ws://' + host + ':8080');
+    let obj = new Object();
+
+    window.ondeviceorientation = function(event) {
+  // 回転軸
+      obj.z = event.alpha;   // z-axis
+      obj.x = event.beta;     // x-axis
+      obj.y = event.gamma;   // y-axis
+
+      const jsonObj = JSON.stringify(obj);
+      ws.send(jsonObj)
+  }
+
+  </script>
+</body>
+</html>
